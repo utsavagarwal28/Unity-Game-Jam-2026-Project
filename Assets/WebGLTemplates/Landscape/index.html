@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>{{{ PRODUCT_NAME }}}</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main id="unity-container">
+        <canvas id="unity-canvas" tabindex="-1"></canvas>
+    </main>
+
+    <script>
+        const buildUrl = "Build";
+        const loaderUrl = buildUrl + "/{{{ LOADER_FILENAME }}}";
+
+        const config = {
+            arguments: [],
+            dataUrl: buildUrl + "/{{{ DATA_FILENAME }}}",
+            frameworkUrl: buildUrl + "/{{{ FRAMEWORK_FILENAME }}}",
+            codeUrl: buildUrl + "/{{{ CODE_FILENAME }}}",
+            streamingAssetsUrl: "StreamingAssets",
+            companyName: "{{{ COMPANY_NAME }}}",
+            productName: "{{{ PRODUCT_NAME }}}",
+            productVersion: "{{{ PRODUCT_VERSION }}}"
+        };
+
+        const container = document.querySelector("#unity-container");
+        const canvas = document.querySelector("#unity-canvas");
+
+        const script = document.createElement("script");
+        script.src = loaderUrl;
+
+        script.onload = () => {
+            createUnityInstance(canvas, config, (progress) => {
+                // Optional: update a loading bar here.
+            }).then((unityInstance) => {
+                // Unity instance is ready.
+            }).catch((message) => {
+                console.error(message);
+                alert("Unable to load the game. Please refresh the page.");
+            });
+        };
+
+        script.onerror = () => {
+            console.error("Failed to load the Unity WebGL loader:", loaderUrl);
+            alert("Unable to load the game files. Please check the build folder.");
+        };
+
+        document.body.appendChild(script);
+    </script>
+</body>
+</html>

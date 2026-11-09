@@ -1,0 +1,49 @@
+/* Full browser viewport: black letterbox area around the game. */
+html,
+body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+/* Keep the game centred and use all available space without cropping. */
+#unity-container {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #000;
+}
+
+/*
+ * Fixed 16:9 landscape canvas.
+ * The !important rules override inline dimensions that Unity's loader
+ * may apply to the canvas element.
+ */
+#unity-canvas {
+    display: block;
+    width: min(100vw, 177.7777778vh) !important;
+    height: auto !important;
+    max-width: 100vw;
+    max-height: 100vh;
+    aspect-ratio: 16 / 9;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: none;
+    background: #000;
+}
+
+/* Prevent browser touch gestures from scrolling or zooming the game page. */
+body {
+    touch-action: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
